@@ -8,24 +8,21 @@ service = ['authorization-service', 'file-service', 'location-service', 'product
             'supplier-service', 'user-service', 'warehouse-service', 'mapping-service', 'erp-old-service',
             'customer-service', 'elasticsearch-service', 'marketing-service',
             'mall-release-service', 'shoppe-release-service', 'mainsite-release-service', 'order-service',
-            'bill-service', 'purchase-service', 'notice-service', 'statistics-service', 'timedtask-service',
-            'mall-api-service', 'bidding-service', 'leading-openapi-gateway', 'leading-sync-elasticsearch']
+            'bill-service', 'purchase-service', 'notice-service', 'statistics-service', 'timedtask-service']
 
 base = ['leading-common', 'leading-datasource', 'leading-distributed-lock', 'leading-idempotent-component',
  'leading-parent-pom', 'leading-resource-base']
 
 control = ['service-api-gateway', 'service-registry', 'turbine-dashboard', 'spring-boot-admin', 'configuration-server']
 
-jobs_arr = control
+jobs_arr = service+control
 
 
 for job in jobs_arr:
 	try: 
-		# server.delete_job("DEV_" + job)
-		# server.delete_job("TEST_" + job)
-		server.delete_job("PP_" + job)
-		# server.delete_job("PROD_" + job)
-		# server.delete_job("235_" + job)
+		server.build_job("DEV_" + job)
+		server.build_job("TEST_" + job)
+		server.build_job("PP_" + job)
 	except jenkins.NotFoundException:
 		print("error,"+job+" Not Found")
 	else:
